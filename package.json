@@ -1,4 +1,25 @@
 {
+  "name": "@neryss/mc_server_status",
+  "version": "1.0.1",
+  "description": "A tool to get informations from MC Servers",
+  "homepage": "https://github.com/Neryss/mc_server_status#readme",
+  "bugs": {
+    "url": "https://github.com/Neryss/mc_server_status/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neryss/mc_server_status.git"
+  },
+  "license": "MIT",
+  "author": "Neryss",
+  "type": "commonjs",
+  "main": "dst/mc_status.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "undici-types": "^7.8.0"
+  },
   "devDependencies": {
     "@types/node": "^24.0.4"
   }

@@ -119,7 +119,8 @@ function readVarInt(buffer: Buffer, offset: number) {
     byte = buffer[offset + size];
     value |= (byte & 0x7F) << (7 * size);
     size++;
-    if (size > 5) throw new Error("VarInt too big");
+    if (size > 5)
+      throw new Error("VarInt too big");
   } while ((byte & 0x80) === 0x80);
   return { value, size };
 }
@@ -133,5 +134,4 @@ function main(): void {
     handshake(process.argv[2], Number(process.argv[3]));
 }
 
-main();
-
+exports = { handshake };

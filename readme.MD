@@ -10,10 +10,10 @@ You can use `npm i` to install the dependencies (typescript types).
 
 # Sources
 
-- [Minecraft server list protocol]("https://minecraft.wiki/w/Java_Edition_protocol/Server_List_Ping")
-- [VarInt pseudo code]("https://minecraft.wiki/w/Java_Edition_protocol/Packets#VarInt_and_VarLong")
-- [Handshake format]("https://minecraft.wiki/w/Java_Edition_protocol/Packets#Handshake")
-- [Protocol ids]("https://minecraft.fandom.com/wiki/Protocol_version")
+- [Minecraft server list protocol](https://minecraft.wiki/w/Java_Edition_protocol/Server_List_Ping)
+- [VarInt pseudo code](https://minecraft.wiki/w/Java_Edition_protocol/Packets#VarInt_and_VarLong)
+- [Handshake format](https://minecraft.wiki/w/Java_Edition_protocol/Packets#Handshake)
+- [Protocol ids](https://minecraft.fandom.com/wiki/Protocol_version)
 
 # Packets
 
@@ -46,6 +46,6 @@ The status packet is only composed of the packet ID and its length. It must be s
 
 # Response
 
-The server response format can be found [here]("https://minecraft.wiki/w/Java_Edition_protocol/Server_List_Ping#Status_Response").
+The server response format can be found [here](https://minecraft.wiki/w/Java_Edition_protocol/Server_List_Ping#Status_Response).
 It is composed of a single String field, as with every other String response, it is prefixed by its length as a VarInt, which can be used to
 wait and read for several chunks as done in the script.

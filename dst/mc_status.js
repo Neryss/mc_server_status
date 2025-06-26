@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handshake = handshake;
+exports.getStatus = getStatus;
 const net = __importStar(require("net"));
 // Helper to encode a varint
 function writeVarInt(value) {
@@ -69,50 +69,54 @@ function createStatusRequestPacket() {
     return Buffer.concat([length, packetID]);
 }
 // Main handshake function
-function handshake(addr, port) {
-    const client = new net.Socket();
-    client.connect(port, addr, () => {
-        console.log("Connected to server");
-        const handshake_packet = createHandshakePacket(addr, port);
-        const status_request = createStatusRequestPacket();
-        client.write(handshake_packet);
-        client.write(status_request);
-    });
-    let received_data = Buffer.alloc(0);
-    client.on("data", (data) => {
-        received_data = Buffer.concat([received_data, data]);
-        try {
-            let offset = 0;
-            // Read packet length
-            const length = readVarInt(received_data, offset);
-            offset += length.size;
-            // Wait until we have the full packet
-            if (received_data.length < offset + length.value) {
-                return; // wait for more data
+function getStatus(addr, port) {
+    return new Promise((resolve, reject) => {
+        const client = new net.Socket();
+        client.connect(port, addr, () => {
+            console.log("Connected to server");
+            const handshake_packet = createHandshakePacket(addr, port);
+            const status_request = createStatusRequestPacket();
+            client.write(handshake_packet);
+            client.write(status_request);
+        });
+        let received_data = Buffer.alloc(0);
+        client.on("data", (data) => {
+            received_data = Buffer.concat([received_data, data]);
+            try {
+                let offset = 0;
+                // Read packet length
+                const length = readVarInt(received_data, offset);
+                offset += length.size;
+                // Wait until we have the full packet
+                if (received_data.length < offset + length.value) {
+                    return; // wait for more data
+                }
+                // Read packet ID
+                const packetId = readVarInt(received_data, offset);
+                offset += packetId.size;
+                // Read JSON string length
+                const strLen = readVarInt(received_data, offset);
+                offset += strLen.size;
+                // Wait until we have the full JSON string
+                if (received_data.length < offset + strLen.value) {
+                    return;
+                }
+                // Extract and parse the json response so we can log it
+                const json_str = received_data.slice(offset, offset + strLen.value).toString("utf8");
+                const json = JSON.parse(json_str);
+                // console.log("Server Response:", json);
+                client.end();
+                resolve(json);
             }
-            // Read packet ID
-            const packetId = readVarInt(received_data, offset);
-            offset += packetId.size;
-            // Read JSON string length
-            const strLen = readVarInt(received_data, offset);
-            offset += strLen.size;
-            // Wait until we have the full JSON string
-            if (received_data.length < offset + strLen.value) {
-                return;
+            catch (e) {
+                console.error("Error parsing server response:", e);
+                reject(e);
+                client.end();
             }
-            // Extract and parse the json response so we can log it
-            const json_str = received_data.slice(offset, offset + strLen.value).toString("utf8");
-            const json = JSON.parse(json_str);
-            console.log("Server Response:", json);
-            client.end();
-        }
-        catch (e) {
-            console.error("Error parsing server response:", e);
-            client.end();
-        }
-    });
-    client.on("close", () => {
-        console.log("Connection closed");
+        });
+        client.on("close", () => {
+            console.log("Connection closed");
+        });
     });
 }
 // Read varint from buffer
@@ -128,12 +132,4 @@ function readVarInt(buffer, offset) {
             throw new Error("VarInt too big");
     } while ((byte & 0x80) === 0x80);
     return { value, size };
-}
-// Entry point
-function main() {
-    console.log(process.argv.length);
-    if (process.argv.length <= 2)
-        handshake("mc.hypixel.net", 25565);
-    else if (process.argv.length == 4)
-        handshake(process.argv[2], Number(process.argv[3]));
 }

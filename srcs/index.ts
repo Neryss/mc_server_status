@@ -1,10 +1,12 @@
-import { handshake } from './mc_status';
+import { getStatus } from './mc_status';
 
-function main() {
+async function main() {
+  var json;
   if (process.argv.length <= 2)
-    handshake("neryss.pw", 25565);
+    json = await getStatus("neryss.pw", 25565);
   else
-    handshake(process.argv[2], Number(process.argv[3]));
+    json = await getStatus(process.argv[2], Number(process.argv[3]));
+  console.log("Ret: ", json);
 }
 
 main();

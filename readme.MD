@@ -32,11 +32,11 @@ When sending a TCP request to the server, it expects a specific packet to arrive
 In our case, the handshake protocol comes first, it uses the protocol `0x00` and its data is formed as follows:
 
 ```
-|     name         |  type  |            notes                                               |
-|------------------|--------|----------------------------------------------------------------|
-| Protocol version | VarInt | The protocol version (minecraft version, check "protocol ids") |
-| Server addr      | String | hostname/ip of the server                                      |
-| Server port      | u_short| Defaults to 25565                                              |
+|     name         |  type       |            notes                                               |
+|------------------|-------------|----------------------------------------------------------------|
+| Protocol version | VarInt      | The protocol version (minecraft version, check "protocol ids") |
+| Server addr      | String      | hostname/ip of the server                                      |
+| Server port      | u_short     | Defaults to 25565                                              |
 | Intent           | VarInt Enum | 1 for status, 2 for login, 3 for transfer                 |
 ```
 

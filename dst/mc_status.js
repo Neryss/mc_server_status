@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = handshake;
+exports.handshake = handshake;
 const net = __importStar(require("net"));
 // Helper to encode a varint
 function writeVarInt(value) {

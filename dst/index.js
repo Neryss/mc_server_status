@@ -1,10 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mc_status_1 = __importDefault(require("./mc_status"));
+const mc_status_1 = require("./mc_status");
 function main() {
-    (0, mc_status_1.default)("neryss.pw", 25565);
+    if (process.argv.length <= 2)
+        (0, mc_status_1.handshake)("neryss.pw", 25565);
+    else
+        (0, mc_status_1.handshake)(process.argv[2], Number(process.argv[3]));
 }
 main();

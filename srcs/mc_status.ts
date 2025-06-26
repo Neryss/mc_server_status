@@ -50,7 +50,7 @@ function createStatusRequestPacket(): Buffer {
 }
 
 // Main handshake function
-export default function handshake(addr: string, port: number): void {
+function handshake(addr: string, port: number): void {
   const client = new net.Socket();
 
   client.connect(port, addr, () => {
@@ -134,3 +134,4 @@ function main(): void {
     handshake(process.argv[2], Number(process.argv[3]));
 }
 
+export { handshake };

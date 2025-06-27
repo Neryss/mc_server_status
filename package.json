@@ -1,6 +1,6 @@
 {
   "name": "@neryss/mc_server_status",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A tool to get informations from MC Servers",
   "homepage": "https://github.com/Neryss/mc_server_status#readme",
   "bugs": {
@@ -14,6 +14,7 @@
   "author": "Neryss",
   "type": "commonjs",
   "main": "dst/mc_status.js",
+  "types": "dst/mc_status.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -73,7 +73,6 @@ function getStatus(addr, port) {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
         client.connect(port, addr, () => {
-            console.log("Connected to server");
             const handshake_packet = createHandshakePacket(addr, port);
             const status_request = createStatusRequestPacket();
             client.write(handshake_packet);
@@ -109,13 +108,15 @@ function getStatus(addr, port) {
                 resolve(json);
             }
             catch (e) {
-                console.error("Error parsing server response:", e);
                 reject(e);
                 client.end();
             }
         });
         client.on("close", () => {
-            console.log("Connection closed");
+            //console.log("Connection closed");
+        });
+        client.on("error", (err) => {
+            reject("Error while getting the status: " + err);
         });
     });
 }

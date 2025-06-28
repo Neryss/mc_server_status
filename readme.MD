@@ -2,11 +2,24 @@
 
 This is a script I wrote to get the informations from a running minecraft server.
 
-## Run
+## How to use
 
-You can use `npm i` to install the dependencies (typescript types).
+The module is available using [npm](www.npmjs.com/package/@neryss/mc_server_status).
+```ts
+import { getStatus } from "@neryss/mc_server_status";
 
-`tsc index.ts` and `node index.js <addr> <port>` to run the script!
+getStatus("neryss.pw", 25565).then(res => {
+  console.log(res);
+}).catch((error) => {
+  console.error(error);
+});
+```
+
+#
+
+# Dev info
+
+You'll fine documentation about how the package was developped further below!
 
 # Sources
 

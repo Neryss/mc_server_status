@@ -1,6 +1,6 @@
 {
   "name": "@neryss/mc_server_status",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A tool to get informations from MC Servers",
   "homepage": "https://github.com/Neryss/mc_server_status#readme",
   "bugs": {

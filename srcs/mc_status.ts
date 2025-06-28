@@ -1,6 +1,7 @@
 import * as net from "net";
 
-// Helper to encode a varint
+// More informations about the VarInt format in the readme,
+// the function encodes a value (int) to a VarInt
 function writeVarInt(value: number): Buffer {
   const bytes: number[] = [];
   while (true) {
@@ -49,7 +50,7 @@ function createStatusRequestPacket(): Buffer {
   return Buffer.concat([length, packetID]);
 }
 
-// Main handshake function
+// Communicate using mc server protocol to get informations about a desired server
 function getStatus(addr: string, port: number): Promise<any> {
   return new Promise((resolve, reject) => {
     const client = new net.Socket();
@@ -95,7 +96,6 @@ function getStatus(addr: string, port: number): Promise<any> {
         // Extract and parse the json response so we can log it
         const json_str = received_data.slice(offset, offset + strLen.value).toString("utf8");
         const json = JSON.parse(json_str);
-        // console.log("Server Response:", json);
 
         client.end();
         resolve(json);

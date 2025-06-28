@@ -25,7 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStatus = getStatus;
 const net = __importStar(require("net"));
-// Helper to encode a varint
+// More informations about the VarInt format in the readme,
+// the function encodes a value (int) to a VarInt
 function writeVarInt(value) {
     const bytes = [];
     while (true) {
@@ -68,7 +69,7 @@ function createStatusRequestPacket() {
     const length = writeVarInt(packetID.length);
     return Buffer.concat([length, packetID]);
 }
-// Main handshake function
+// Communicate using mc server protocol to get informations about a desired server
 function getStatus(addr, port) {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
@@ -103,7 +104,6 @@ function getStatus(addr, port) {
                 // Extract and parse the json response so we can log it
                 const json_str = received_data.slice(offset, offset + strLen.value).toString("utf8");
                 const json = JSON.parse(json_str);
-                // console.log("Server Response:", json);
                 client.end();
                 resolve(json);
             }

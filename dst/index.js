@@ -12,16 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mc_status_1 = require("./mc_status");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        var json;
-        if (process.argv.length <= 2)
-            json = yield (0, mc_status_1.getStatus)("neryss.pw", 25565).catch((error) => {
-                console.log(error);
-            });
-        else
-            json = yield (0, mc_status_1.getStatus)(process.argv[2], Number(process.argv[3])).catch((error) => {
-                console.error(error);
-            });
-        console.log("Ret: ", json);
+        var json = yield (0, mc_status_1.getStatus)("neryss.pw", 25565).catch((error) => {
+            console.log(error);
+        });
     });
 }
 main();

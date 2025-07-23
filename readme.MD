@@ -15,6 +15,19 @@ getStatus("neryss.pw", 25565).then(res => {
 });
 ```
 
+Response will be formated as follows:
+
+```ts
+{
+  favicon: 'data:image/png;base64,{data}`,
+  isModded: true/false,
+  description: 'server description',
+  players: {max: 20, online: 0},
+  version: {name: '1.21.1', protocol: 767},
+  preventChatReports: true/false
+}
+```
+
 #
 
 # Dev info

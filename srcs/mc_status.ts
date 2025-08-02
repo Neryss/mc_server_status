@@ -71,7 +71,6 @@ function getStatus(addr: string, port: number): Promise<any> {
       try {
         let offset = 0;
 
-        // Read packet length
         const length = readVarInt(received_data, offset);
         offset += length.size;
 
@@ -93,7 +92,6 @@ function getStatus(addr: string, port: number): Promise<any> {
           return;
         }
 
-        // Extract and parse the json response so we can log it
         const json_str = received_data.slice(offset, offset + strLen.value).toString("utf8");
         const json = JSON.parse(json_str);
 
